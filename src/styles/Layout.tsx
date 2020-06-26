@@ -2,9 +2,12 @@
 import * as React from "react";
 // Other imports
 import { Global, css } from "@emotion/core";
+import styled from "@emotion/styled";
 import { ThemeProvider } from "emotion-theming";
 
 const theme = {
+  main: "#21ce99",
+  line: "#00ff86",
   black: "#393939",
 };
 
@@ -37,6 +40,7 @@ export const Layout = ({ children }) => {
             font-size: 18px;
             color: ${theme.black};
             font-family: "Neue Montreal";
+            background: ${theme.main};
 
             @media (min-width: 768px) {
               font-size: 21px;
@@ -66,3 +70,14 @@ export const Layout = ({ children }) => {
     </ThemeProvider>
   );
 };
+
+interface IFlexProps {
+  direction: string;
+}
+
+export const FlexCenter = styled.div`
+  display: flex;
+  flex-direction: ${(p: IFlexProps) => (p.direction ? "column" : "row")};
+  justify-content: center;
+  align-items: center;
+`;

@@ -72,12 +72,13 @@ export const Layout = ({ children }) => {
 };
 
 interface IFlexProps {
-  direction: string;
+  direction?: string;
+  justify?: string;
 }
 
 export const FlexCenter = styled.div`
   display: flex;
-  flex-direction: ${(p: IFlexProps) => (p.direction ? "column" : "row")};
-  justify-content: center;
+  flex-direction: ${(p: IFlexProps) => p.direction};
+  justify-content: ${(p: IFlexProps) => p.justify};
   align-items: center;
 `;

@@ -23,20 +23,71 @@ const InputContainer = styled.div`
 `;
 
 const Form = () => {
+  const { useReducer } = React;
+
+  const emptyState = {
+    email: "",
+    password: "",
+    clientid: "",
+    status: "IDLE",
+  };
+
+  const reducer = (state, action) => {
+    switch (action.type) {
+      case "email":
+        return { ...state, email: action.email };
+      case "password":
+        return { ...state, password: action.password };
+      case "clientid":
+        return { ...state, clientid: action.clientid };
+      case "updateStatus":
+        return { ...state, status: action.status };
+      case "reset":
+      default:
+        return emptyState;
+    }
+  };
+
+  const [state, dispatch] = useReducer(reducer, emptyState);
+
+  const setStatus = (status: string) =>
+    dispatch({ type: "updateStatus", status });
+  // Prevent rendering everytime field changes? Currying
+  const updateFieldValue = (fieldName: string) => (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => dispatch({ type: fieldName, [fieldName]: e.target.value });
+  const { email, password, clientid } = state;
+  console.log({ email, password, clientid });
+
   return (
     <Container>
       <InputContainer>
         <label>
           Email
-          <Input />
+          <Input
+            type="email"
+            value={email}
+            onChange={updateFieldValue("email")}
+            placeholder="Email"
+          />
         </label>
         <label>
           Password
-          <Input />
+          <Input
+            type="password"
+            value={password}
+            onChange={updateFieldValue("password")}
+            placeholder="Password"
+          />
         </label>
         <label>
           Client ID
-          <Input />
+          <Input
+            type="password"
+            value={clientid}
+            onChange={updateFieldValue("clientid")}
+            placeholder="ClientID"
+          />
         </label>
       </InputContainer>
       <FlexCenter justify="space-around">

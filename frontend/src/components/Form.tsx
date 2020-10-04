@@ -24,7 +24,7 @@ const InputContainer = styled.div`
 `;
 
 const Form = () => {
-  const { useReducer } = React;
+  const { useReducer, useEffect } = React;
 
   const emptyState = {
     email: "",
@@ -38,7 +38,7 @@ const Form = () => {
       case "email":
         return { ...state, email: action.email };
       case "password":
-        return { ...state, password: action.password };
+        return { ...state, password: btoa(action.password) };
       case "clientid":
         return { ...state, clientid: action.clientid };
       case "updateStatus":
@@ -59,6 +59,8 @@ const Form = () => {
   ) => dispatch({ type: fieldName, [fieldName]: e.target.value });
   const { email, password, clientid } = state;
   console.log({ email, password, clientid });
+
+  const handleLogin = () => {};
 
   return (
     <Container>

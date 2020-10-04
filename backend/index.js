@@ -1,3 +1,4 @@
+require("dotenv").config();
 const { ApolloServer, gql } = require("apollo-server");
 
 const typeDefs = gql`
@@ -12,7 +13,12 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    stocks: () => stocks,
+    stocks: () =>
+      fetch(
+        `https://cloud.iexapis.com/stable/stock/aapl/quote?token=${process.env.IEX_CLOUD_API}`
+      ).then((res) => {
+        console.log(res.json());
+      }),
   },
 };
 
